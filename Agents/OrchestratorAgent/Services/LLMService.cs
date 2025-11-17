@@ -27,7 +27,8 @@ public class LLMService : ILLMService
         _kernel = builder.Build();
         _chatCompletionService = _kernel.GetRequiredService<IChatCompletionService>();
 
-        PlutoMcpPlugin.AddPlutoMcpServer(_kernel);
+        _kernel.AddPlutoMcpServer();
+        _kernel.AddTopolinoMcpServer();
     }
 
     public async Task<string> ChatAsync(string userMessage, string? sessionId = null,

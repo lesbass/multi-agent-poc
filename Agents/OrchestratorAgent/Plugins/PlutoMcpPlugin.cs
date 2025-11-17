@@ -7,7 +7,7 @@ public static class PlutoMcpPlugin
 {
     private const string ServerName = "PlutoMcpServer";
 
-    public static void AddPlutoMcpServer(Kernel kernel)
+    public static void AddPlutoMcpServer(this Kernel kernel)
     {
         var clientTransport = new StdioClientTransport(new StdioClientTransportOptions
         {
