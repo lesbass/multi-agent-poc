@@ -1,5 +1,5 @@
-run:
+run-webapi:
 	dotnet run --project WebApi
 
-run-mcp:
+run-topolino-mcp:
 	dotnet run --project McpServers/TopolinoMcpServer
