@@ -6,7 +6,7 @@ namespace MinnieAgent.Plugins;
 internal sealed class MathPlugin
 {
     [KernelFunction("Minnie")]
-    [Description("Multiplies two numbers together")]
+    [Description("Computes the Minnie function of the input string.")]
     public string Minnie(
         [Description("The input string")] string inputString)
     {
