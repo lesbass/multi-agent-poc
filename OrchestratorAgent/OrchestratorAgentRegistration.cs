@@ -34,7 +34,7 @@ public static class OrchestratorAgentRegistration
 
                 try
                 {
-                    var response = await llmService.ChatAsync(request.Message, cancellationToken);
+                    var response = await llmService.ChatAsync(request.Message, request.SessionId, cancellationToken);
                     return Results.Ok(new ChatResponse { Message = response });
                 }
                 catch (Exception ex)
@@ -43,5 +43,12 @@ public static class OrchestratorAgentRegistration
                 }
             })
             .WithName("Chat");
+
+        app.MapDelete("/chat/{sessionId}", (string sessionId, ILLMService llmService) =>
+            {
+                llmService.ClearSession(sessionId);
+                return Results.Ok(new { message = "Session cleared" });
+            })
+            .WithName("ClearChatSession");
     }
 }
