@@ -7,9 +7,10 @@ namespace McpServer.Tools;
 public class PlutoTool
 {
     [McpServerTool]
-    [Description("Echoes the message back to the client.")]
-    public static int Pluto(int a, int b)
+    [Description("Calcola la funzione Pluto di una stringa")]
+    public static string Pluto(string inputString)
     {
-        return a + b;
+        Console.WriteLine($"🪛 Pluto called with {inputString}");
+        return $"PLU_{inputString}_TO";
     }
 }

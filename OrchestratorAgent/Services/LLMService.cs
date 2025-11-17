@@ -81,7 +81,7 @@ public class LLMService : ILLMService
             Command = "dotnet",
             Arguments =
             [
-                "run", "--project", "/Users/maf/proj/intre/gilde/multi-agent/PlutoMcpServer/PlutoMcpServer.csproj"
+                "run", "--project", "../PlutoMcpServer/PlutoMcpServer.csproj"
             ]
         });
 

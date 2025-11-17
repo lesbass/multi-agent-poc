@@ -6,3 +6,21 @@ Content-Type: application/json
   "message": "Can you apply the Pippo function to 8 and 7?",
   "sessionId": "test-session"
 }
+
+###
+POST http://localhost:5235/chat
+Content-Type: application/json
+
+{
+  "message": "Can you apply the Pluto function to Mario?",
+  "sessionId": "test-session"
+}
+
+###
+POST http://localhost:5235/chat
+Content-Type: application/json
+
+{
+  "message": "Can you apply the Pluto function to the Pippo function of 8 and 7?",
+  "sessionId": "test-session"
+}
