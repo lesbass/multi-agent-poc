@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using ModelContextProtocol.Server;
 
-namespace McpServer.Tools;
+namespace PlutoMcpServer.Tools;
 
 [McpServerToolType]
 public class PlutoTool
