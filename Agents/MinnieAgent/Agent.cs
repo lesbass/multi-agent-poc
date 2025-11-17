@@ -1,7 +1,7 @@
 using A2A;
+using BaseAgent.Models;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
-using MinnieAgent.Models;
 using MinnieAgent.Plugins;
 
 namespace MinnieAgent;

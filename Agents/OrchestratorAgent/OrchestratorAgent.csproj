@@ -7,10 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
-        <PackageReference Include="Microsoft.SemanticKernel" Version="1.67.1"/>
-        <PackageReference Include="Microsoft.SemanticKernel.Connectors.OpenAI" Version="1.67.1"/>
+        <PackageReference Include="A2A" Version="0.3.3-preview"/>
         <PackageReference Include="ModelContextProtocol.Core" Version="0.4.0-preview.2"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\BaseAgent\BaseAgent.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-namespace OrchestratorAgent.Models;
+namespace BaseAgent.Models;
 
 public record OpenAIConfiguration
 {

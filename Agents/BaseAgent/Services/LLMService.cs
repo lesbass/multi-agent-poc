@@ -1,34 +1,32 @@
-﻿using Microsoft.Extensions.Options;
+﻿using BaseAgent.Models;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
-using OrchestratorAgent.Models;
-using OrchestratorAgent.Plugins;
 
-namespace OrchestratorAgent.Services;
+namespace BaseAgent.Services;
 
-public class LLMService : ILLMService
+public class LLMService
 {
     private readonly IChatCompletionService _chatCompletionService;
     private readonly Kernel _kernel;
     private readonly Lock _lock = new();
     private readonly Dictionary<string, ChatHistory> _sessions = new();
 
-    public LLMService(IOptions<OpenAIConfiguration> openAiConfigurationOptions)
+    public LLMService(OpenAIConfiguration config,
+        Action<IKernelBuilderPlugins> pluginInitializer,
+        Action<Kernel> kernelSetup)
     {
-        var config = openAiConfigurationOptions.Value;
         if (string.IsNullOrWhiteSpace(config.ApiKey))
             throw new InvalidOperationException("OpenAI API Key is not configured");
 
         var builder = Kernel.CreateBuilder();
         builder.AddOpenAIChatCompletion(config.Model, config.ApiKey);
-        builder.Plugins.AddFromType<MathPlugin>();
+        pluginInitializer(builder.Plugins);
 
         _kernel = builder.Build();
         _chatCompletionService = _kernel.GetRequiredService<IChatCompletionService>();
 
-        _kernel.AddPlutoMcpServer();
-        _kernel.AddTopolinoMcpServer();
+        kernelSetup(_kernel);
     }
 
     public async Task<string> ChatAsync(string userMessage, string? sessionId = null,
@@ -62,13 +60,5 @@ public class LLMService : ILLMService
         chatHistory.AddAssistantMessage(response);
 
         return response;
-    }
-
-    public void ClearSession(string sessionId)
-    {
-        lock (_lock)
-        {
-            _sessions.Remove(sessionId);
-        }
     }
 }

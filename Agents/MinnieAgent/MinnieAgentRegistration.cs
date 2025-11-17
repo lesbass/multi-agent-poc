@@ -1,17 +1,13 @@
 using BaseAgent.Models;
 using BaseAgent.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.SemanticKernel;
-using OrchestratorAgent.Plugins;
+using MinnieAgent.Plugins;
 
-namespace OrchestratorAgent;
+namespace MinnieAgent;
 
-public static class OrchestratorAgentRegistration
+public static class MinnieAgentRegistration
 {
-    public static void AddOrchestratorAgentServices(this WebApplicationBuilder builder)
+    public static void AddMinnieAgentServices(this WebApplicationBuilder builder)
     {
         var configuration = builder.Configuration.GetSection(OpenAIConfiguration.SectionName)
             .Get<OpenAIConfiguration>();
@@ -22,19 +18,11 @@ public static class OrchestratorAgentRegistration
         }
 
         builder.Services.AddSingleton(new LLMService(configuration,
-            plugins =>
-            {
-                plugins.AddFromType<MathPlugin>();
-                plugins.AddFromType<MinnieAgentPlugin>();
-            },
-            kernel =>
-            {
-                kernel.AddPlutoMcpServer();
-                kernel.AddTopolinoMcpServer();
-            }));
+            plugins => plugins.AddFromType<MathPlugin>(),
+            kernel => { }));
     }
 
-    public static void UseOrchestratorAgent(this WebApplication app)
+    public static void UseMinnieAgent(this WebApplication app)
     {
         app.MapPost("/chat", async (ChatRequest request, LLMService llmService, CancellationToken cancellationToken) =>
         {
