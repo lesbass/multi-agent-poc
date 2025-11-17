@@ -2,7 +2,6 @@
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
-using ModelContextProtocol.Client;
 using OrchestratorAgent.Models;
 using OrchestratorAgent.Plugins;
 
@@ -28,7 +27,7 @@ public class LLMService : ILLMService
         _kernel = builder.Build();
         _chatCompletionService = _kernel.GetRequiredService<IChatCompletionService>();
 
-        AddPlutoMcpServer().GetAwaiter().GetResult();
+        PlutoMcpPlugin.AddPlutoMcpServer(_kernel);
     }
 
     public async Task<string> ChatAsync(string userMessage, string? sessionId = null,
@@ -70,27 +69,5 @@ public class LLMService : ILLMService
         {
             _sessions.Remove(sessionId);
         }
-    }
-
-    private async Task AddPlutoMcpServer()
-    {
-        var serverName = "PlutoMcpServer";
-        var clientTransport = new StdioClientTransport(new StdioClientTransportOptions
-        {
-            Name = serverName,
-            Command = "dotnet",
-            Arguments =
-            [
-                "run", "--project", "../McpServers/PlutoMcpServer/PlutoMcpServer.csproj"
-            ]
-        });
-
-        var mcpClient = await McpClient.CreateAsync(clientTransport);
-
-        var tools = await mcpClient.ListToolsAsync().ConfigureAwait(false);
-
-        Console.WriteLine("Found MCP Tools: " + string.Join(", ", tools.Select(t => t.Name)));
-        _kernel.Plugins.AddFromFunctions($"{serverName}Functions",
-            tools.Select(aiFunction => aiFunction.AsKernelFunction()));
     }
 }
