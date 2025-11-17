@@ -3,3 +3,6 @@ run-webapi:
 
 run-topolino-mcp:
 	dotnet run --project McpServers/TopolinoMcpServer
+
+run-minnie-agent:
+	dotnet run --project Agents/MinnieAgent
