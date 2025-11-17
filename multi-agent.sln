@@ -5,9 +5,15 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{107F5E7B-5C3D-434A-804E-70757E63CA95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrchestratorAgent", "OrchestratorAgent\OrchestratorAgent.csproj", "{A9B0D162-A655-41BB-96EC-F4AA3E92CCBD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Agents", "Agents", "{7D7C1035-709D-445E-B826-4B38C07B115A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlutoMcpServer", "PlutoMcpServer\PlutoMcpServer.csproj", "{B8C1E273-B766-42CC-97FD-F5BB4F93DDCE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrchestratorAgent", "Agents\OrchestratorAgent\OrchestratorAgent.csproj", "{1EE2E8F8-400C-43F4-87F7-91A78BDB3973}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "McpServers", "McpServers", "{4779800C-FA5D-4CF7-89B1-F532E87ADAFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlutoMcpServer", "McpServers\PlutoMcpServer\PlutoMcpServer.csproj", "{2DAFA17E-E43E-4E8C-9F19-3E21AC82DB64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopolinoMcpServer", "McpServers\TopolinoMcpServer\TopolinoMcpServer.csproj", "{9E438BDD-85B1-4FD1-B927-A92B89CA6200}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +36,22 @@ Global
 		{B8C1E273-B766-42CC-97FD-F5BB4F93DDCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8C1E273-B766-42CC-97FD-F5BB4F93DDCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8C1E273-B766-42CC-97FD-F5BB4F93DDCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EE2E8F8-400C-43F4-87F7-91A78BDB3973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EE2E8F8-400C-43F4-87F7-91A78BDB3973}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EE2E8F8-400C-43F4-87F7-91A78BDB3973}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EE2E8F8-400C-43F4-87F7-91A78BDB3973}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DAFA17E-E43E-4E8C-9F19-3E21AC82DB64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DAFA17E-E43E-4E8C-9F19-3E21AC82DB64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DAFA17E-E43E-4E8C-9F19-3E21AC82DB64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DAFA17E-E43E-4E8C-9F19-3E21AC82DB64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E438BDD-85B1-4FD1-B927-A92B89CA6200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E438BDD-85B1-4FD1-B927-A92B89CA6200}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E438BDD-85B1-4FD1-B927-A92B89CA6200}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E438BDD-85B1-4FD1-B927-A92B89CA6200}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1EE2E8F8-400C-43F4-87F7-91A78BDB3973} = {7D7C1035-709D-445E-B826-4B38C07B115A}
+		{2DAFA17E-E43E-4E8C-9F19-3E21AC82DB64} = {4779800C-FA5D-4CF7-89B1-F532E87ADAFE}
+		{9E438BDD-85B1-4FD1-B927-A92B89CA6200} = {4779800C-FA5D-4CF7-89B1-F532E87ADAFE}
 	EndGlobalSection
 EndGlobal
