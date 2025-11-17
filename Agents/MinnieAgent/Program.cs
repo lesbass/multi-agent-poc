@@ -6,10 +6,6 @@ using MinnieAgent.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 var openAiSection = builder.Configuration.GetSection(OpenAIConfiguration.SectionName).Get<OpenAIConfiguration>();
-
-builder.Services.AddSingleton<ITaskManager, TaskManager>();
-builder.Services.AddSingleton<Agent>();
-
 var app = builder.Build();
 
 var agent = new Agent(openAiSection ?? throw new ArgumentException(

@@ -56,12 +56,16 @@ public class Agent : IDisposable
         // Get message from the user
         var userMessage = task.History!.Last().Parts.First().AsTextPart().Text;
 
+        Console.WriteLine("🪛 MinnieAgent received message: " + userMessage);
+
         // Get the response from the agent
         var artifact = new Artifact();
         await foreach (var response in _agent.InvokeAsync(userMessage,
                            cancellationToken: cancellationToken))
         {
             var content = response.Message.Content;
+            Console.WriteLine("🪛 MinnieAgent response chunk: " + content);
+
             artifact.Parts.Add(new TextPart { Text = content! });
         }
 
