@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using OrchestratorAgent.Models;
+using OrchestratorAgent.Services;
 
 namespace OrchestratorAgent;
 
@@ -13,14 +13,7 @@ public static class OrchestratorAgentRegistration
         builder.Services.Configure<OpenAIConfiguration>(
             builder.Configuration.GetSection(OpenAIConfiguration.SectionName));
 
-        builder.Services.AddSingleton<ILLMService>(sp =>
-        {
-            var config = sp.GetRequiredService<IOptions<OpenAIConfiguration>>().Value;
-
-            return string.IsNullOrWhiteSpace(config.ApiKey)
-                ? throw new InvalidOperationException("OpenAI API Key is not configured")
-                : new LLMService(config.ApiKey, config.Model);
-        });
+        builder.Services.AddSingleton<ILLMService, LLMService>();
     }
 
     public static void UseOrchestratorAgent(this WebApplication app)

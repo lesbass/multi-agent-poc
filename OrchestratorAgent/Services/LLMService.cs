@@ -1,25 +1,29 @@
-﻿using Microsoft.SemanticKernel;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
+using OrchestratorAgent.Models;
+using OrchestratorAgent.Plugins;
 
-namespace OrchestratorAgent;
-
-public interface ILLMService
-{
-    Task<string> ChatAsync(string userMessage, string? sessionId = null, CancellationToken cancellationToken = default);
-    void ClearSession(string sessionId);
-}
+namespace OrchestratorAgent.Services;
 
 public class LLMService : ILLMService
 {
     private readonly IChatCompletionService _chatCompletionService;
     private readonly Kernel _kernel;
-    private readonly object _lock = new();
+    private readonly Lock _lock = new();
     private readonly Dictionary<string, ChatHistory> _sessions = new();
 
-    public LLMService(string apiKey, string modelId = "gpt-4o")
+    public LLMService(IOptions<OpenAIConfiguration> openAiConfigurationOptions)
     {
+        var config = openAiConfigurationOptions.Value;
+        if (string.IsNullOrWhiteSpace(config.ApiKey))
+            throw new InvalidOperationException("OpenAI API Key is not configured");
+
         var builder = Kernel.CreateBuilder();
-        builder.AddOpenAIChatCompletion(modelId, apiKey);
+        builder.AddOpenAIChatCompletion(config.Model, config.ApiKey);
+        builder.Plugins.AddFromType<MathPlugin>();
+
         _kernel = builder.Build();
         _chatCompletionService = _kernel.GetRequiredService<IChatCompletionService>();
     }
@@ -40,11 +44,16 @@ public class LLMService : ILLMService
         }
 
         chatHistory.AddUserMessage(userMessage);
+        var executionSettings = new OpenAIPromptExecutionSettings
+        {
+            FunctionChoiceBehavior = FunctionChoiceBehavior.Auto()
+        };
 
         var result = await _chatCompletionService.GetChatMessageContentAsync(
             chatHistory,
-            kernel: _kernel,
-            cancellationToken: cancellationToken);
+            executionSettings,
+            _kernel,
+            cancellationToken);
 
         var response = result.Content ?? string.Empty;
         chatHistory.AddAssistantMessage(response);
