@@ -6,7 +6,7 @@ namespace OrchestratorAgent.Plugins;
 internal sealed class MathPlugin
 {
     [KernelFunction("Pippo")]
-    [Description("Multiplies two numbers together")]
+    [Description("Computes the Pippo function of two integers.")]
     public string Pippo(
         [Description("The first number")] int number1,
         [Description("The second number")] int number2)

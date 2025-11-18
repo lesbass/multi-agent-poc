@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "pluto": {
+      "name": "Pluto MCP Server",
+      "description": "STDIO-based MCP server for Pluto operations",
+      "transport": "stdio",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "../McpServers/PlutoMcpServer/PlutoMcpServer.csproj"
+      ],
+      "enabled": true
+    },
+    "topolino": {
+      "name": "Topolino MCP Server",
+      "description": "HTTP-based MCP server for Topolino operations",
+      "transport": "http",
+      "url": "http://localhost:5010/mcp",
+      "enabled": true
+    }
+  }
+}

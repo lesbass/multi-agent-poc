@@ -1,0 +1,40 @@
+{
+  "a2aAgents": {
+    "minnie": {
+      "name": "Minnie Agent",
+      "description": "Semantic Kernel-based agent specialized in Minnie function calculations",
+      "url": "http://localhost:5020",
+      "capabilities": {
+        "streaming": false,
+        "pushNotifications": false
+      },
+      "skills": [
+        {
+          "id": "minnie_sk",
+          "name": "Minnie Function",
+          "description": "Calculates the Minnie function of a string",
+          "tags": ["minnie", "string", "function", "semantic-kernel"]
+        }
+      ],
+      "enabled": true
+    },
+    "paperina": {
+      "name": "Paperina Agent",
+      "description": "Semantic Kernel-based agent specialized in Paperina function calculations",
+      "url": "http://localhost:5030",
+      "capabilities": {
+        "streaming": false,
+        "pushNotifications": false
+      },
+      "skills": [
+        {
+          "id": "paperina_sk",
+          "name": "Paperina Function",
+          "description": "Calculates the Paperina function of a string",
+          "tags": ["paperina", "string", "function", "semantic-kernel"]
+        }
+      ],
+      "enabled": true
+    }
+  }
+}
