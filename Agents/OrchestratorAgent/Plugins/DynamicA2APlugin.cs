@@ -6,31 +6,41 @@ using OrchestratorAgent.Configuration;
 
 namespace OrchestratorAgent.Plugins;
 
-/// <summary>
-///     Dynamic plugin that automatically creates functions for all registered A2A agents.
-///     Reads agent configuration from AgentRegistry and creates corresponding kernel functions.
-/// </summary>
 public class DynamicA2APlugin
 {
     private readonly A2AConfiguration _configuration;
     private readonly Dictionary<string, A2AClient> _clients = new();
+    private readonly string _agentListDescription;
 
     public DynamicA2APlugin(A2AConfiguration configuration)
     {
         _configuration = configuration;
         
         // Initialize clients for all enabled agents
-        foreach (var (agentId, agentConfig) in _configuration.A2aAgents.Where(kvp => kvp.Value.Enabled))
+        var enabledAgents = _configuration.A2aAgents.Where(kvp => kvp.Value.Enabled).ToList();
+        
+        foreach (var (agentId, agentConfig) in enabledAgents)
         {
             _clients[agentId] = new A2AClient(new Uri(agentConfig.Url));
         }
+        
+        // Build dynamic description with available agents
+        var agentDescriptions = enabledAgents
+            .Select(kvp => $"{kvp.Key} ({kvp.Value.Description})")
+            .ToList();
+        
+        _agentListDescription = agentDescriptions.Count > 0
+            ? $"Communicates with an A2A agent. Available agents: {string.Join(", ", agentDescriptions)}"
+            : "Communicates with an A2A agent. No agents currently available.";
+
+        System.Console.WriteLine($"🪛 DynamicA2APlugin initialized with agents: {string.Join(", ", _clients.Keys)} \n {_agentListDescription}");
     }
 
     /// <summary>
     /// Sends a message to a specific A2A agent by its ID.
     /// </summary>
     [KernelFunction("CallA2AAgent")]
-    [Description("Communicates with an A2A agent. Available agents: minnie (Minnie function), paperina (Paperina function)")]
+    [Description("Communicates with an A2A agent")]
     public async Task<string> CallAgent(
         [Description("The ID of the agent to call (e.g., 'minnie', 'paperina')")]
         string agentId,
